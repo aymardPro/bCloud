@@ -116,9 +116,10 @@
 
 <div class="formLogin">
 	<?php
-        echo $this->Form->create('User', array(
-	       'inputDefaults' => array('label' => false, 'div' => false),
-	       'default' => false
+		echo $this->Form->create('User', array(
+			'url' => array('action' => 'loginRequest'),
+			'inputDefaults' => array('label' => false, 'div' => false),
+			'default' => false
         ))
     ?>
 	

@@ -17,26 +17,6 @@ class User extends AppModel
  * @var array
  */
 	public $validate = array(
-		'account_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Compte requis.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'group_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Groupe requis.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
         'username' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
@@ -70,7 +50,7 @@ class User extends AppModel
 		'email' => array(
 			'email' => array(
 				'rule' => array('email'),
-				'message' => 'Email valide requis.',
+				'message' => 'E-mail valide requis.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -215,8 +195,7 @@ class User extends AppModel
     public function register($data)
     {
         $this->data = $data;
-        $this->data[$this->alias]['account_id'] = AuthComponent::user('account_id');
-        
+		
         if ((int) $this->data[$this->alias]['status'] === 0) {
             $this->data[$this->alias]['register_token'] = $this->randomString(55);
         } else {

@@ -13288,3 +13288,80 @@ Stack Trace:
 #4 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(160): Dispatcher->_invoke(Object(ProformasController), Object(CakeRequest), Object(CakeResponse))
 #5 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #6 {main}
+2014-03-01 18:47:36 Error: [MissingControllerException] Controller class ImagesController could not be found.
+Exception Attributes: array (
+  'class' => 'ImagesController',
+  'plugin' => NULL,
+)
+Request URL: /bCloud/images/favicon.ico
+Stack Trace:
+#0 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-03-01 19:17:23 Error: Fatal Error (1): Call to a member function user() on a non-object in [C:\xampp\htdocs\bCloud\Controller\UsersController.php, line 279]
+2014-03-01 19:17:23 Error: [FatalErrorException] Call to a member function user() on a non-object
+Request URL: /bCloud/login
+Stack Trace:
+#0 C:\xampp\htdocs\Core\2.x\lib\Cake\Error\ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to a membe...', 'C:\xampp\htdocs...', 279)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', 'C:\xampp\htdocs...', 279, Array)
+#2 C:\xampp\htdocs\Core\2.x\lib\Cake\Core\App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', 'C:\xampp\htdocs...', 279, Array)
+#3 C:\xampp\htdocs\Core\2.x\lib\Cake\Core\App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-03-01 19:21:04 Error: [PDOException] SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`bcloud_entreprise`.`users`, CONSTRAINT `fk_user_account` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+Request URL: /bCloud/users/loginRequest
+Stack Trace:
+#0 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(458): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(424): DboSource->_execute('INSERT INTO `bc...', Array)
+#2 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(1004): DboSource->execute('INSERT INTO `bc...')
+#3 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Model.php(1832): DboSource->create(Object(User), Array, Array)
+#4 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Model.php(1667): Model->save(Array, Array)
+#5 C:\xampp\htdocs\bCloud\Controller\UsersController.php(253): Model->saveField('lastvisite', '2014-03-01 19:2...')
+#6 [internal function]: UsersController->loginRequest()
+#7 C:\xampp\htdocs\Core\2.x\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersController), Array)
+#8 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#9 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#10 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#11 {main}
+2014-03-01 20:21:02 Error: [NotFoundException] Not Found
+Request URL: /bCloud/users/view/images/favicon.ico
+Stack Trace:
+#0 [internal function]: UsersController->view('images', 'favicon.ico')
+#1 C:\xampp\htdocs\Core\2.x\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersController), Array)
+#2 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#3 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#4 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-03-01 21:08:29 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'User.group_id' in 'where clause'
+Request URL: /bCloud/users/add
+Stack Trace:
+#0 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(458): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(424): DboSource->_execute('SELECT `Group`....', Array)
+#2 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(665): DboSource->execute('SELECT `Group`....', Array, Array)
+#3 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Datasource\DboSource.php(1077): DboSource->fetchAll('SELECT `Group`....', false)
+#4 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Model.php(2902): DboSource->read(Object(Group), Array)
+#5 C:\xampp\htdocs\Core\2.x\lib\Cake\Model\Model.php(2874): Model->_readDataSource('list', Array)
+#6 C:\xampp\htdocs\bCloud\Controller\UsersController.php(163): Model->find('list', Array)
+#7 [internal function]: UsersController->add()
+#8 C:\xampp\htdocs\Core\2.x\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersController), Array)
+#9 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#10 C:\xampp\htdocs\Core\2.x\lib\Cake\Routing\Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#11 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2014-03-01 21:14:23 Error: [MissingControllerException] Controller class FournisseursController could not be found.
+Exception Attributes: array (
+  'class' => 'FournisseursController',
+  'plugin' => 'RelationManager',
+)
+Request URL: /bCloud/relation_manager/fournisseurs
+Stack Trace:
+#0 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-03-01 21:14:32 Error: [MissingControllerException] Controller class ImagesController could not be found.
+Exception Attributes: array (
+  'class' => 'ImagesController',
+  'plugin' => 'RelationManager',
+)
+Request URL: /bCloud/relation_manager/images/favicon.ico
+Stack Trace:
+#0 C:\xampp\htdocs\bCloud\webroot\index.php(101): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}

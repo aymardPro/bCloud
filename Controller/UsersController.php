@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property User $User
  */
 class UsersController extends AppController
-{ 
+{
 /**
  * beforeFilter method
  *
@@ -16,18 +16,20 @@ class UsersController extends AppController
     {
         parent::beforeFilter();
 		
-		$this->Auth->allow('login', 'logout');
+		$this->Auth->allow();
+		//$this->Auth->allow('login', 'logout', 'confirm);
 		
-        $this->ajaxFunc = array('get', 'getprofil', 'add', 'edit');
-        
-        $this->Auth->allow('confirm');
-        
+        $this->ajaxFunc = array('get', 'getprofil', 'add', 'edit', 'loginRequest');
+		
         if ($this->request->params['action'] === 'login') {
             $this->layout = 'bCloud/login';
         }
         
         if (in_array($this->request->params['action'], $this->ajaxFunc)) {
-            $this->layout = 'ajax';
+			if (!$this->request->is('ajax')) {
+				return $this->redirect(array('action' => 'index'));
+			}
+			$this->layout = 'ajax';
         }
     }
 
@@ -47,8 +49,20 @@ class UsersController extends AppController
     public function get()
     {
         $options['recursive'] = 1;
-        $options['conditions'] = array($this->modelClass.'.account_id' => AuthComponent::user('account_id'));
-        $options['order'] = array($this->modelClass.'.created DESC');
+		$options['order'] = array($this->modelClass.'.created DESC');
+		$masters = array((int) Configure::read('bCloud.Group.Admin'), (int) Configure::read('bCloud.Group.Manager'));
+		
+		if ((int) $this->Auth->user('group_id') !== (int) Configure::read('bCloud.Group.Admin')) {
+        	$options['conditions'] = array(
+        		$this->modelClass.'.group_id <>' => (int) Configure::read('bCloud.Group.Admin')
+			);
+		}
+		
+		if (!in_array((int) $this->Auth->user('group_id'), $masters)) {
+        	$options['conditions'] = array(
+        		$this->modelClass.'.account_id' => $this->Auth->user('account_id')
+			);
+		}
         
         $this->request->data = $this->{$this->modelClass}->find('all', $options);
     }
@@ -104,15 +118,10 @@ class UsersController extends AppController
         
         $this->set(compact('waiting', 'valide', 'rejete'));
     }
-
-/**
- * add method
- *
- * @return void
- */
-    public function add()
-    {
-        if ($this->request->is('post')) {
+	
+	public function addRequest()
+	{
+		if ($this->request->is('post')) {
             $check = 1;
             $this->{$this->modelClass}->create();
 			
@@ -135,12 +144,27 @@ class UsersController extends AppController
             echo json_encode($return);
             
             $this->render('/Elements/empty');
-        } else {
-            $accounts = $this->{$this->modelClass}->Account->find('list');
-            $groups = $this->{$this->modelClass}->Group->find('list');
-            
-            $this->set(compact('accounts', 'groups'));
         }
+	}
+
+/**
+ * add method
+ *
+ * @return void
+ */
+    public function add()
+    {
+    	$options = array();
+		
+		if ((int) $this->Auth->user('group_id') !== (int) Configure::read('bCloud.Group.Admin')) {
+        	$options['conditions'] = array(
+        		'Group.id <>' => (int) Configure::read('bCloud.Group.Admin')
+			);
+		}
+        $accounts = $this->{$this->modelClass}->Account->find('list');
+        $groups = $this->{$this->modelClass}->Group->find('list', $options);
+        
+        $this->set(compact('accounts', 'groups'));
     }
 
 /**
@@ -226,31 +250,18 @@ class UsersController extends AppController
         }
         return $this->redirect(array('action' => 'index'));
     }
-    
-    public function login($bool = false)
-    {
-        $this->set('title_for_layout', __('Page de connexion'));
-		
-		if ($bool) {
-			if ($this->Cookie->check($this->loginCookieName)) {
-				$this->Cookie->write($this->loginCookieName, null, false, time()-3600);
-				return $this->redirect(array('action' => 'login'));
-			}
-		}
-        
-        if (AuthComponent::user()) {
-            return $this->redirect('/', null, false);
-        }
-        
-        if ($this->request->is('post')) {
-            $this->layout = 'ajax';
-            
-            if ($this->Auth->login()) {
-            	if (!$this->Cookie->check($this->loginCookieName)) {
-            		$this->Cookie->write($this->loginCookieName, $this->_encrypt(AuthComponent::user('email')), true, 2592000);
+	
+	public function loginRequest()
+	{
+		if ($this->request->is('post')) {
+			
+			if ($this->Auth->login()) {
+	            if (!$this->Cookie->check($this->loginCookieName)) {
+	            	$this->Cookie->write($this->loginCookieName, $this->Dream->encrypt($this->Auth->user('email')), true, 2592000);
             	}
-                // Saving the datetime
-                $this->{$this->modelClass}->id = AuthComponent::user('id');
+            	
+            	// Saving the datetime
+                $this->{$this->modelClass}->id = $this->Auth->user('id');
                 $this->{$this->modelClass}->saveField('lastvisite', gmdate('Y-m-d H:i:s'));
 				
                 $check = 1;
@@ -265,11 +276,27 @@ class UsersController extends AppController
             echo json_encode($return);
             
             $this->render('/Elements/empty');
-        } else {
-            if ($this->Cookie->check($this->loginCookieName) && !AuthComponent::user()) {
-            	$this->set('login', $this->_decrypt($this->Cookie->read($this->loginCookieName)));
+		} else {
+            if ($this->Cookie->check($this->loginCookieName) && !$this->Auth->user()) {
+            	$this->set('login', $this->Dream->decrypt($this->Cookie->read($this->loginCookieName)));
             }
         }
+	}
+    
+    public function login($bool = false)
+    {
+        $this->set('title_for_layout', __('Page de connexion'));
+		
+        if ($this->Auth->user()) {
+            return $this->redirect('/', null, false);
+        }
+		
+		if ($bool) {
+			if ($this->Cookie->check($this->loginCookieName)) {
+				$this->Cookie->write($this->loginCookieName, null, false, time()-3600);
+				return $this->redirect(array('action' => 'login'));
+			}
+		}
     }
     
     public function logout()

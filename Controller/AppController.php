@@ -15,6 +15,8 @@
 App::uses('Controller', 'Controller');
 App::uses('CakeTime', 'Utility');
 
+App::import('Vendor', 'Dream/Dream');
+
 /**
  * Application Controller
  *
@@ -29,6 +31,7 @@ class AppController extends Controller
     public $ajaxFunc = array();
     public $options = array();
     public $loginCookieName = 'DreambCloudLogin';
+    public $Dream;
     
 	public $components = array(
         'Acl',
@@ -80,6 +83,8 @@ class AppController extends Controller
 	
 	public function beforeFilter()
 	{
+		$this->Dream = new Dream();
+		
 		$this->layout = 'bCloud/default';
 		
 		$this->Cookie->name = 'DreamCookie';
@@ -104,30 +109,4 @@ class AppController extends Controller
 			}
 		}
 	}
-    
-    public function _exists($id)
-    {
-        if (!$this->{$this->modelClass}->exists($id)) {
-            throw new NotFoundException();
-        }
-        return true;
-    }
-	
-    function _encrypt($string)
-    {
-        if(!$string) {
-        	return false;
-        }
-        $_encryptData = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, 'SECURE_STRING_1', $string, MCRYPT_MODE_ECB, 'SECURE_STRING_2');
-        return trim(base64_encode($_encryptData));
-    }
-    
-    function _decrypt($string)
-    {
-        if(!$string) 
-            return false; 
-        $_encryptData = base64_decode($string);
-        $_decryptData = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, 'SECURE_STRING_1', $_encryptData, MCRYPT_MODE_ECB, 'SECURE_STRING_2');
-        return trim($_decryptData);
-    }
 }

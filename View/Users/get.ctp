@@ -9,9 +9,10 @@ $script = '
 	    		[
                     { "bSortable": false },
                     null,
-                    null,
-                    null,
-                    null,
+                    { "bSortable": false },
+                    { "bSortable": false },
+                    { "bSortable": false },
+                    { "bSortable": false },
                     { "bSortable": false }
                 ],
 	    		"bJQueryUI": false,
@@ -67,9 +68,10 @@ echo $this->Html->scriptBlock($script, array('inline' => true));
 		<tr>
 			<th width="5%"> &nbsp; </th>
 			<th class="left"> <?php echo __('NOM &amp; PRENOMS') ?> </th>
+            <th width="15%" class="right"> <?php echo __('COMPTE') ?> </th>
             <th width="10%"> <?php echo __('STATUT') ?> </th>
-            <th width="15%" class="left"> <?php echo __('GROUPE') ?> </th>
-            <th width="20%" class="left"> <?php echo __('DERNIERE CONNEXION') ?> </th>
+            <th width="15%" class="right"> <?php echo __('GROUPE') ?> </th>
+            <th width="20%" class="right"> <?php echo __('DERNIERE CONNEXION') ?> </th>
 			<th width="5%"> &nbsp; </th>
 		</tr>
 	</thead>
@@ -82,28 +84,32 @@ echo $this->Html->scriptBlock($script, array('inline' => true));
 				echo $this->Html->link(
     				$this->Html->image('/images/icon/coquette-icons-set/24x24/info.png'),
     				array('action' => 'view', $data['User']['id']),
-    				array('escape' => false, 'title' => __('Profil de %s %s', $data['User']['nom'], $data['User']['prenoms']))
+    				array('escape' => false, 'title' => __('Profil de %s %s', $data['User']['prenoms'], $data['User']['nom']))
     			);
 				?>
 			</td>
             <td class="left">
-                <?php echo __('%s %s', $data['User']['nom'], $data['User']['prenoms']); ?>
+                <?php echo __('%s %s', $data['User']['prenoms'], $data['User']['nom']); ?>
+            </td>
+            <td class="right">
+                <?php echo $data['Account']['name']; ?>
             </td>
             <td class="center">
                 <?php
+                $status = (bool) $data['User']['status'] ? 'Activé':'Désactivé';
                 echo $this->Html->image(
                     '/images/icon/coquette-icons-set/16x16/'.((bool) $data['User']['status'] ? 'green':'red').'_button.png',
                     array(
-                        'alt' => (bool) $data['User']['status'] ? 'Activé':'Désactivé',
-                        'title' => (bool) $data['User']['status'] ? 'Activé':'Désactivé'
+                        'alt' => $status,
+                        'title' => $status
                     )
                 );
                 ?>
             </td>
-            <td class="left">
+            <td class="right">
                 <?php echo $data['Group']['name']; ?>
             </td>
-			<td class="left">
+			<td class="right">
                     <?php
                     if (!is_null($data['User']['lastvisite'])) {
                      echo CakeTime::timeAgoInWords($data['User']['lastvisite']);

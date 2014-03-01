@@ -114,7 +114,12 @@ echo $this->Html->scriptBlock($script, array('inline' => true));
 <hr />
 
 <div class="formEl_b">
-	<?php echo $this->Form->create('User', array('inputDefaults' => array('div' => false, 'label' => false))); ?>
+	<?php
+	echo $this->Form->create('User', array(
+		'inputDefaults' => array('div' => false, 'label' => false),
+		'url' => array('action' => 'addRequest')
+	));
+	?>
 			
 			<div class="section">
 				 <label for="UserAccountId">
