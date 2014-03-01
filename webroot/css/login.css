@@ -1,0 +1,170 @@
+html {
+            background-image: none;
+        }
+		body{
+			background-position:0 0;
+			}
+        label.iPhoneCheckLabelOn span {
+            padding-left:0px
+        }
+        #versionBar {
+            background-color:#212121;
+            position:fixed;
+            width:100%;
+            height:35px;
+            bottom:0;
+            left:0;
+            text-align:center;
+            line-height:35px;
+            z-index:11;
+            -webkit-box-shadow: black 0px 10px 10px -10px inset;
+            -moz-box-shadow: black 0px 10px 10px -10px inset;
+            box-shadow: black 0px 10px 10px -10px inset;
+        }
+        .copyright{
+            text-align:center; font-size:10px; color:#CCC;
+        }
+        .copyright a{
+            color:#0E90D2; text-decoration:none
+        }
+        
+        
+            
+#versionBar {
+	height: 50px;
+	background-color: #000;
+	background-image: url(../images/top_bgrepeat.jpg);
+	text-shadow:none;
+	color:#FFF;
+	text-align: right;
+	font-size:10px;
+	line-height: 50px;
+	padding: 0 0px;
+}
+#login {
+	width:400px;
+	height:254px;
+	margin:20px auto;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	margin-top:-148px;
+	opacity:0;
+	filter:alpha(opacity=0);
+	border: 5px #f4f4f4 solid;
+	min-width:200px;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+#login .ribbon {
+	background-image: url(../images/logform.png);
+	position: absolute;
+	width: 111px;
+	height: 110px;
+	z-index: 12;
+	margin-top: -8px;
+	margin-left: -9px;
+}
+#login .shadow {
+	position: absolute;
+	width: 434px;
+	z-index: -1;
+	margin-top: 5px;
+	background-image: url(../images/shadowForm.png);
+	height: 33px;
+	margin-left: -20px;
+}
+#login .inner {
+	background-color:#FFF;
+	border: 1px #cccccc solid;
+	min-height: 230px;
+	overflow: hidden;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+#login .logo {
+	width:191px;
+	height:41px;
+	margin:20px auto;
+	text-align:center;
+	position: absolute;
+	opacity:0;
+	filter:alpha(opacity=0);
+	top: 5%;
+	left: 50%;
+	margin-left: -95px;
+	z-index: 11;
+	background-color: #FFF;
+}
+#login .formLogin {
+	width:100%;
+	text-align:center;
+	margin:auto;
+	position: relative;
+	left: -100px;
+	opacity:0;
+	filter:alpha(opacity=0);
+	height: 150px;
+	padding: 90px 0px 20px 0px;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+#login #username_id,
+#login #UserEmail,
+#login #UserPassword,
+#login #password {
+	font-size: 17px;
+	background-repeat:no-repeat;
+	text-align:center;
+	margin:auto;
+	height: 35px;
+	background-position: 2px 3px;
+	line-height: 35px;
+	color: #999;
+	width: 80%;
+	margin-bottom: 10px;
+	font-family:"Myriad Pro", Arial, Helvetica, sans-serif;
+}
+#login #UserEmail:focus,
+#login #UserPassword:focus,
+#login #username_id:focus,
+#login #password:focus {
+	color:#000;
+}
+#login #username_id,
+#login #UserEmail {
+	background-image: url(../images/icon/user_.png);
+}
+#login #password,
+#login #UserPassword {
+	background-image: url(../images/icon/pass_.png);
+}
+#login .loginButton {
+	width:80%;
+	padding:0px 5px;
+	margin: 5px auto 20px auto;
+}
+.text_success {
+	font-size:14px;
+	text-align:center;
+	margin:0px 0 35px 0;
+	line-height:25px;
+	position: absolute;
+	left: 50%;
+	width: 200px;
+	top: 50%;
+	z-index: 50;
+	margin-left: -100px;
+	text-transform: uppercase;
+	padding: 20px 0px;
+	margin-top: -100px;
+	display: none;
+}
+.text_success img {
+}
+.text_success span {
+	display: block;
+	padding: 10px;
+	color: #CCC;
+}
